@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>VIP破解</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,minimum-scale=1,maximum-scale=1,user-scalable=no">
+	<script src="vue.min.js"></script>
+</head>
+<body>
+	<div class="head">
+		<div class="title">各大视频网站VIP视频解析</div>
+	</div>
+	<div id="app">
+
+		<div class="select_box">
+			<select  v-model="selected" class="select">
+				<option v-bind:value="luxian.url" v-for="luxian in luxians">{{luxian.name}}</option>
+			</select>
+
+			<div class="input_box">
+				<input type="text" placeholder="视频播放地址" v-model="videourl" class="input" v-on:input="cleaninput">
+				<div v-on:click="clean" class="clean" v-show="cleanshow"></div>
+			</div>
+			<button v-on:click="start" class="startbutton">立即播放</button>
+
+		</div>
+
+
+		<span v-show="show">Selected: {{ selected+videourl }}</span>
+		<div class="url"></div>
+
+		<iframe v-bind:src="url_end" frameborder="0" class="video"></iframe>
+		
+		<div class="tip">注：若播放不正常更换不同路线试试，手机看可能有广告，电脑广告较少</div>
+
+	</div>
+
+
+	<script>
+		var app = new Vue({
+			el: '#app',
+			data: {
+				selected: 'http://www.662820.com/xnflv/index.php?url=',
+				show: false,
+				cleanshow: false,
+				luxians:[
+					{name:"路线一（效果好，清晰）",url:'http://www.662820.com/xnflv/index.php?url='},
+					{name:"路线二（解析慢一点，清晰，无广告）",url:'http://api.xfsub.com/index.php?url='},
+					{name:"路线三（可选清晰度，有广告）",url:'http://j.zz22x.com/jx/?url='},
+					{name:"路线四（可选播放速度，不太清晰）",url:'http://jiexi.92fz.cn/player/vip.php?url='},
+					{name:"路线五（无广告）",url:'http://y.mt2t.com/lines?url='},
+					{name:"路线六（清晰，有广告）",url:'http://api.nepian.com/ckparse/?url='},
+					{name:"路线七",url:'http://aikan-tv.com/?url='}
+				],
+				videourl: '',
+				url_end: ''
+			},
+			methods:{
+				start: function () {
+					if (this.videourl =='') {
+						alert('视频地址不能为空')
+					}else{
+						this.url_end = this.selected + this.videourl
+					}
+
+				},
+				clean: function () {
+					this.videourl = "",
+					this.cleanshow = !this.cleanshow
+				},
+				cleaninput: function () {
+					if (this.videourl !=''){
+						this.cleanshow=true
+					}
+				}
+			}
+		})
+
+	</script>
+	<style>
+		body{
+			margin:0px;
+			transition-duration:1s;
+		}
+		#app{
+			max-width:1200px;
+			margin: auto;
+		}
+		.head{
+			height: 60px;
+			line-height: 60px;
+			border-bottom: 1px solid #ddd;
+			margin-bottom: 25px;
+		}
+		.title{
+			max-width:1200px;
+			margin:auto;
+			text-indent: 15px;
+			font-weight: bold;
+		}
+		.select_box{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+		.select{
+			font-size:16px;
+			/*width:180px;*/
+			height:36px;
+			line-height: 36px;
+			flex:3 0 140px;
+			margin:6px 15px;
+			text-indent: 5px;
+		}
+/*		option{
+			padding-left: 8px;
+			text-indent: 8px;
+		}*/
+		.startbutton{
+			border:none;
+			background: #5cb85c;
+			color: #fff;
+			/*width:140px;*/
+			height: 36px;
+			line-height: 36px;
+			font-size:16px;
+			margin: 6px 15px 20px;
+			flex: 2 0 80px;
+		}
+		.video{
+			width: calc(100% - 30px);
+    		margin-left: 15px;
+			height: 600px;
+			border:1px solid #ddd;
+			background: #000;
+		}
+		.input_box{
+			position: relative;
+			width:320px;
+			margin:6px 15px;
+			flex: 5 0 280px;
+
+		}
+		.input{
+			font-size: 16px;
+			width:100%;
+			height:36px;
+			line-height: 36px;
+			padding-right:35px;
+			padding-left:8px;
+			box-sizing: border-box;
+
+		}
+		.clean{
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			right: 6px;
+			top: 8px;
+			background: url(images/clean.png) no-repeat;
+			background-size: contain;
+		}
+		.tip{
+			padding-left: 15px;
+			color: #ef8120;
+			margin-top: 10px;
+		}
+		@media screen and (max-width: 960px) {
+			.video{height: 450px}
+		}
+		@media screen and (max-width: 450px) {
+			.video{height: 220px}
+		}
+	</style>
+</body>
+</html>

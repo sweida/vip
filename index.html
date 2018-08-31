@@ -5,6 +5,7 @@
 	<title>VIP会员视频破解</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=3,minimum-scale=1,maximum-scale=1,user-scalable=no">
 	<script src="vue.min.js"></script>
+	<script src="axios.min.js"></script>
 </head>
 <body>
 	<div class="head">
@@ -14,7 +15,7 @@
 
 		<div class="select_box">
 			<select  v-model="selected" class="select">
-				<option v-bind:value="luxian.url" v-for="luxian in luxians">{{luxian.name}}</option>
+				<option v-bind:value="item.url" v-for="(item, index) in luxians" :key="index">{{item.name}}</option>
 			</select>
 
 			<div class="input_box">
@@ -44,16 +45,54 @@
 				show: false,
 				cleanshow: false,
 				luxians:[
-					{name:"路线一（1号稳定通用vip引擎系统）",url:'http://jx.598110.com/index.php?url='},
-					{name:"路线二（2号稳定通用vip引擎系统）",url:'http://jx.598110.com/zuida.php?url='},
-					{name:"路线三（可选清晰度，有广告）",url:'http://j.zz22x.com/jx/?url='},
-					{name:"路线四（可选播放速度，不太清晰）",url:'http://jiexi.92fz.cn/player/vip.php?url='},
-					{name:"路线五（无广告）",url:'http://y.mt2t.com/lines?url='},
-					{name:"路线六（清晰，有广告）",url:'http://api.nepian.com/ckparse/?url='},
-					{name:"路线七",url:'http://aikan-tv.com/?url='}
+					{
+						"id": "1",
+						"name":"路线一（1号稳定通用vip引擎系统）",
+						"url":'http://jx.598110.com/index.php?url='
+					},
+					{
+						"id": "2",
+						"name":"路线二（2号稳定通用vip引擎系统）",
+						"url":'http://jx.598110.com/zuida.php?url='
+					},
+					{
+						"id": "3",
+						"name":"路线三（可选清晰度，有广告）",
+						"url":'http://j.zz22x.com/jx/?url='
+					},
+					{
+						"id": "4",
+						"name":"路线四（可选播放速度，不太清晰）",
+						"url":'http://jiexi.92fz.cn/player/vip.php?url='
+					},
+					{
+						"id": "5",
+						"name":"路线五（无广告）",
+						"url":'http://y.mt2t.com/lines?url='
+					},
+					{
+						"id": "6",
+						"name":"路线六（清晰，有广告）",
+						"url":'http://api.nepian.com/ckparse/?url='
+					},
+					{
+						"id": "7",
+						"name":"路线七",
+						"url":'http://aikan-tv.com/?url='
+					}
 				],
 				videourl: '',
 				url_end: ''
+			},
+			created() {
+				let _this = this
+				axios.get('http://5b88976d1863df001433e806.mockapi.io/lines')
+					.then(function (res) {
+						_this.luxians = res.data
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
 			},
 			methods:{
 				start: function () {
